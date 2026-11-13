@@ -26,3 +26,6 @@ _git_check.txt
 
 # Logs
 *.log
+
+# PR body temp (github-pr skill)
+/.github/pr-body-temp.md
