@@ -1,0 +1,40 @@
+# ============================================================
+# 测试环境（联调 / QA）
+# 启动：java -jar xxx.jar --spring.profiles.active=test
+# 建议：账号密码用环境变量注入，不要写死真实口令后提交仓库
+# ============================================================
+
+spring:
+  datasource:
+    # 测试库地址（按你们实际机器改）
+    url: jdbc:mysql://127.0.0.1:3306/seckill_mall_test?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
+    # ${ENV:默认值}：优先读环境变量，没有才用默认值
+    username: ${MYSQL_USER:root}
+    password: ${MYSQL_PASSWORD:123456}
+
+  jpa:
+    hibernate:
+      # 测试环境一般允许 update，方便发版补字段；更稳可用 validate
+      ddl-auto: update
+    # 测试环境通常关 SQL 打印，避免日志刷屏
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: false
+
+  redis:
+    host: ${REDIS_HOST:127.0.0.1}
+    port: ${REDIS_PORT:6379}
+    password: ${REDIS_PASSWORD:123456}
+
+mall:
+  jwt:
+    # 测试环境密钥：务必与本地、生产不同
+    secret: ${JWT_SECRET:ateng-seckill-mall-jwt-secret-test-env-only}
+    # token 2 小时，模拟更接近真实登录过期
+    expire-seconds: 7200
+
+logging:
+  level:
+    com.ateng.mall: INFO
+    org.springframework.security: WARN

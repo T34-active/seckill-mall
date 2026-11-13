@@ -1,0 +1,16 @@
+---
+description: 讲解 Java 语法时用 TypeScript 类比（用户学习偏好）
+alwaysApply: true
+---
+
+# Java 语法教学：用 TS 类比
+
+用户在学 Java，熟悉 JS/TS。
+
+当用户问 Java 语法、关键字、写法含义时：
+
+1. 先用一句话说清 Java 里是什么意思
+2. 再用最短 **TypeScript** 对照示例
+3. 点出不一致处（例如：注解 ≠ 装饰器；`static main`；基本类型 `int` vs `number`）
+
+不要只堆 Java 术语；优先建立「这句 Java ≈ 这句 TS」的映射。

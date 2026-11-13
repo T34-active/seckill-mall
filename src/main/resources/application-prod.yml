@@ -1,0 +1,52 @@
+# ============================================================
+# 线上环境（生产）
+# 启动：java -jar xxx.jar --spring.profiles.active=prod
+# 强制要求：MYSQL_PASSWORD / REDIS_PASSWORD / JWT_SECRET 用环境变量注入
+# ============================================================
+
+server:
+  # 生产也可继续 8080，或由 Nginx 反代到该端口
+  port: ${SERVER_PORT:8080}
+
+spring:
+  datasource:
+    # 生产库：替换为真实主机/库名
+    url: ${MYSQL_URL:jdbc:mysql://127.0.0.1:3306/seckill_mall?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=true&allowPublicKeyRetrieval=false}
+    username: ${MYSQL_USER:seckill}
+    # 无默认空密码兜底到“能连上”，避免误用弱口令；必须显式配置
+    password: ${MYSQL_PASSWORD}
+
+  jpa:
+    hibernate:
+      # 生产禁止 update/create，表结构走迁移脚本（Flyway/Liquibase/手工 SQL）
+      ddl-auto: none
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: false
+
+  redis:
+    host: ${REDIS_HOST:127.0.0.1}
+    port: ${REDIS_PORT:6379}
+    password: ${REDIS_PASSWORD}
+    timeout: 2000ms
+    lettuce:
+      pool:
+        # 生产可按 QPS 调大
+        max-active: 32
+        max-idle: 16
+        min-idle: 4
+
+mall:
+  jwt:
+    # 生产密钥必须足够长且随机，且三个环境互不相同
+    secret: ${JWT_SECRET}
+    # 生产可按安全策略缩短，例如 2 小时
+    expire-seconds: ${JWT_EXPIRE_SECONDS:7200}
+
+logging:
+  level:
+    # 生产少打业务明细，靠监控/告警
+    root: WARN
+    com.ateng.mall: INFO
+    org.springframework.security: WARN

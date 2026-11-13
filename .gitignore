@@ -1,0 +1,28 @@
+# Maven
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+
+# IDE
+.idea/
+*.iml
+*.ipr
+*.iws
+src/.idea/
+out/
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Local agent logs / temp
+.learnings/
+_git_check.txt
+
+# Logs
+*.log
